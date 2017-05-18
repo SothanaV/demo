@@ -19,7 +19,7 @@ def getcom(com):
 	global relay_com
 	if(com=="onrelay"):
 		relay_com = "1"
-	else:
+	if(com=="offrelay"):
 		relay_com = "0"
 	print com
 

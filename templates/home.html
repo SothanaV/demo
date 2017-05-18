@@ -21,6 +21,7 @@
 	<div id="control" class="col-sm-4">
 		<div class="col-sm-4">
 			<button type="button" id="on" value="on" onclick="onrelay()">on</button>
+			<button type="button" id="off" value="off" onclick="offrelay()">off</button>
 		</div>
 	</div>
 
@@ -40,6 +41,11 @@
 	{
 		socket.emit('c2s_com',"onrelay");
 		console.log("onrelay");
+	}
+	function offrelay(offrelay)
+	{
+		socket.emit('c2s_com',"offrelay");
+		console.log("offrelay");
 	}
 	socket.on('s2c_temp', function(showtemp)
     {
