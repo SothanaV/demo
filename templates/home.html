@@ -24,6 +24,14 @@
 		</div>
 	</div>
 
+	<div id="showdata" class="col-sm-4">
+		<h2>Status</h2>
+			<h4>Temperature
+					<a id="temp"></a>
+			<h4>Humidity
+					<a id="humi"></a>
+	</div>
+
 </body>
 
 <script type="text/javascript">
@@ -33,4 +41,12 @@
 		socket.emit('c2s_com',"onrelay");
 		console.log("onrelay");
 	}
+	socket.on('s2c_temp', function(showtemp)
+    {
+    document.getElementById("temp").innerHTML=showtemp;
+    });
+    socket.on('s2c_humi', function(showhumi)
+    {
+    document.getElementById("humi").innerHTML=showhumi;
+    });
 </script>

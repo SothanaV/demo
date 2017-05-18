@@ -9,15 +9,20 @@ relay_com = "0"
 @app.route("/data/<temp>/<humi>")
 def getdata(temp,humi):
 	global relay_com
-	print temp
-	print humi
+	print"Temperature:%s Humidity:%s"%(temp,humi)
+	socketio.emit('s2c_temp',temp)
+	socketio.emit('s2c_humi',humi)
 	return relay_com
+
 @socketio.on('c2s_com')
 def getcom(com):
 	global relay_com
-	if(relay_com=="onrelay"):
+	if(com=="onrelay"):
 		relay_com = "1"
+	else:
+		relay_com = "0"
 	print com
+
 @app.route("/home")
 def home():
 	return render_template('home.html')
