@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>sign-in</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+  <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>Sign-in</h1>
+  <p>Please sign-in or bruteforce to get password</p>
+</div>
+  
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+      <form action="signin" method="POST" role="form" class="form-horizontal">
+        <div class="form-group">
+          <label for="usr">Username:</label>
+          <input type="text" class="form-control" name="username">
+        </div>
+        <div class="form-group">
+          <label for="pwd">Password:</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+        <input type="submit" class="primary" id="submit">
+        {{error}}
+      </form>
+
+    </div>
+    
+
+  </div>
+</div>
+
+</body>
+</html>
