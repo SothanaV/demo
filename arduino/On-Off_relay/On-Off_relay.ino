@@ -11,7 +11,7 @@ int DHTPIN = 2;          //setpin of DHT at D4
 int relay = 5;        //setpin of relay at D1
 
 //////กำหนดค่าอื่นๆ//////////////
-int DHTTYPE = DHT22;                  //set Dht Type 
+int DHTTYPE = DHT11;                  //set Dht Type 
 DHT dht(DHTPIN, DHTTYPE);             //define DHT type and pin
 void SendData(float h , float t);     //Define Senddata Voide
 const char* ssid     = "SmartMushroomBox";            //Set ssid ใส่ชื่อwifi

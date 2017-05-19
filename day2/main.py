@@ -5,7 +5,6 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 relay_com = "0"
-
 @app.route("/data/<temp>/<humi>")
 def getdata(temp,humi):
 	global relay_com
@@ -22,7 +21,7 @@ def getcom(com):
 	if(com=="offrelay"):
 		relay_com = "0"
 	print com
-
+	
 @app.route("/home")
 def home():
 	return render_template('home.html')
