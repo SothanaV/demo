@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+  <div id="debug"></div>
+<script>
+var width = 1200,
+    height = 600;
+
+var newNode = function (data={"temp":25}) {
+    return {
+        radius: data.temp
+    };
+},
+nodes = d3.range(40).map(function() { return {radius: Math.random() * 12 + 4}; }),
+root = nodes[0],
+color = d3.scale.category10();
+
+root.radius = 0;
+root.fixed = true;
+
+var force = d3.layout.force()
+    .gravity(0.05)
+    .charge(function (d, i) {
+    return -20;
+})
+    .nodes(nodes)
+    .size([width, height]);
+
+force.start();
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var update = function () {
+    var circles=svg.selectAll("circle")
+      .data(nodes) //.slice(1))
+
+    circles
+      .attr("r", function (d) {
+        return d.radius;
+      })
+
+    circles.enter().append("circle")
+      .attr("r", function (d) {
+        return d.radius;
+      })
+      .style("fill", function (d, i) {
+        return color(i % 10);
+      })
+
+    circles.exit().transition().duration(10000)
+      .style("fill", "white")
+};
+
+update();
+
+force.on("tick", function (e) {
+    var q = d3.geom.quadtree(nodes),
+        i = 0,
+        n = nodes.length;
+
+    while (++i < n) q.visit(collide(nodes[i]));
+
+    svg.selectAll("circle")
+        .attr("cx", function (d) {
+        return d.x;
+    })
+        .attr("cy", function (d) {
+        return d.y;
+    });
+});
+
+var intervalId = null,
+    pos = null;
+
+var addNewNode = function (data) {
+    var nextNode = newNode(data);
+    nextNode.x = width/2;
+    nextNode.y = height/2;
+    nodes.push(nextNode);
+    //d3.select('#debug').text('pos x=' + pos[0] + ',y=' + pos[1] + '-nodes=' + nodes.length);
+    update();
+    force.start();
+};
+
+svg.on('mousedown', function () {
+    //console.log('down');
+    //addNewNode(this);
+    pos = d3.mouse(this);
+    intervalId = setInterval(addNewNode, 100);
+})
+    .on('mouseup', function () {
+    //console.log('up');
+    clearInterval(intervalId);
+})
+    .on("mousemove", function () {
+    pos = d3.mouse(this);
+    root.px = pos[0];
+    root.py = pos[1];
+    force.resume();
+})
+    .on("mouseleave", function () {
+    if (intervalId) clearInterval(intervalId);
+});
+
+function collide(node) {
+    var r = node.radius + 16,
+        nx1 = node.x - r,
+        nx2 = node.x + r,
+        ny1 = node.y - r,
+        ny2 = node.y + r;
+    return function (quad, x1, y1, x2, y2) {
+        if (quad.point && (quad.point !== node)) {
+            var x = node.x - quad.point.x,
+                y = node.y - quad.point.y,
+                l = Math.sqrt(x * x + y * y),
+                r = node.radius + quad.point.radius;
+            if (l < r) {
+                l = (l - r) / l * .5;
+                node.x -= x *= l;
+                node.y -= y *= l;
+                quad.point.x += x;
+                quad.point.y += y;
+            }
+        }
+        return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+    };
+}
+var socket =io();
+socket.on('s2c', function(d){
+  console.log(d)
+  //addNewNode(data)
+  nodes[d.i].user=d.user;
+  nodes[d.i].radius=d.temp;
+  nodes[d.i].humi=d.humi;
+  update();
+  force.start();
+});
+</script>
+</body>
+</html>
