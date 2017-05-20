@@ -9,6 +9,11 @@ socketio = SocketIO(app)
 def hello():
 	return render_template('index.html')
 
+@app.route("get/<id>/<temp>/<humi>")
+def get(id,temp,humi):
+	json="{ id:%s, temp:%s, humi:%s }"%(id,temp,humi)
+	emit('s2c',json, broadcast=True)
+	return "OK"
 
 @socketio.on('c2s')
 def handle_message(message):
