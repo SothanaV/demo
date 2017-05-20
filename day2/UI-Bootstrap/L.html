@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Demo Temperature Page</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,12 +10,38 @@
 </head>
 <body>
 
+<div class="jumbotron text-center">
+  <h1>Weather</h1>
+  <p>Demo page</p> 
+</div>
+
 <div class="container">
   <div class="row">
-  	<div class="col-sm-4" style="background-color: red; height: 100px">.col-sm-4</div>
-  	<div class="col-sm-8" style="background-color: blue; height: 100px">.col-sm-8</div>
+    <div class="col-sm-4 text-center">
+      <h3>Auto</h3>
+      <h1 id="swLabel">off</h1>
+      <button type="button" class="btn btn-default" id="sw" onclick="actionSW()">turn on</button>
+    </div>
+    <div class="col-sm-4 text-center">
+      <h3>Temperature</h3>
+      <h1>25 ºC</h1>
+    </div>
+    <div class="col-sm-4 text-center">
+      <h3>Humidity</h3>
+      <h1>60%</h1>
+    </div>
+    
   </div>
 </div>
+
+<script type="text/javascript">
+  var isOn = false;
+  function actionSW() {
+    isOn = !isOn;
+    document.getElementById("swLabel").innerHTML = (isOn) ? "on":"off";
+    document.getElementById("sw").innerHTML = (isOn) ? "turn off":"turn on";
+  }
+</script>
 
 </body>
 </html>
