@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, send, emit
+import json
 
 app = Flask(__name__)
 #app.config['SECRET_KEY'] = 'secret!'
@@ -9,10 +10,15 @@ socketio = SocketIO(app)
 def hello():
 	return render_template('index.html')
 
-@app.route("get/<id>/<temp>/<humi>")
-def get(id,temp,humi):
-	json="{ id:%s, temp:%s, humi:%s }"%(id,temp,humi)
-	emit('s2c',json, broadcast=True)
+@app.route("/get/<node_id>/<temp>/<humi>/")
+def get(node_id,temp,humi):
+	data={ 
+		"node_id":node_id,
+		"temp": temp,
+		"humi": humi
+	}
+	print json.dumps(data, sort_keys=True)
+	socketio.emit('s2c', json.dumps(data), broadcast=True)
 	return "OK"
 
 @socketio.on('c2s')
