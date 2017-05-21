@@ -10,7 +10,7 @@ socketio = SocketIO(app)
 def hello():
 	return render_template('index.html')
 
-@app.route("/get/<node_id>/<temp>/<humi>/")
+@app.route("/data/<node_id>/<temp>/<humi>/")
 def get(node_id,temp,humi):
 	data={ 
 		"node_id":node_id,
