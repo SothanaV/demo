@@ -5,6 +5,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
 relay_com = "0"
+relay_com2 = "0"
+
 @app.route("/data/<temp>/<humi>")
 def getdata(temp,humi):
 	global relay_com
@@ -12,6 +14,15 @@ def getdata(temp,humi):
 	socketio.emit('s2c_temp',temp)
 	socketio.emit('s2c_humi',humi)
 	return relay_com
+
+@app.route("/data2/<temp2>/<humi2>")
+def getdata2(temp2,humi2):
+	global relay_com2
+	print"Temperature2:%s Humidity2:%s"%(temp2,humi2)
+	socketio.emit('s2c_temp2',temp2)
+	socketio.emit('s2c_humi2',humi2)
+	return relay_com2
+
 
 @socketio.on('c2s_com')
 def getcom(com):
@@ -25,7 +36,3 @@ def getcom(com):
 @app.route("/home")
 def home():
 	return render_template('home.html')
-
-@app.route("/epoch")
-def epoch():
-	return render_template('epoch.html')
