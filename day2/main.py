@@ -25,3 +25,7 @@ def getcom(com):
 @app.route("/home")
 def home():
 	return render_template('home.html')
+
+@app.route("/epoch")
+def epoch():
+	return render_template('epoch.html')
