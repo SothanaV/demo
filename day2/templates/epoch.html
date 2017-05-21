@@ -35,6 +35,10 @@
 		    var chart = $('#real-time-line').epoch({
 		        type: 'time.line',
 		        data: data.history(),
+		        range: {
+					left: [0,100],
+					right: [0,100]
+				},
 		        axes: ['left', 'bottom', 'right']
 		    });
 
