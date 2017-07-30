@@ -10,7 +10,7 @@ relay_com2 = "0"
 @app.route("/data/<temp>/<humi>")
 def getdata(temp,humi):
 	global relay_com
-	print"Temperature:%s Humidity:%s"%(temp,humi)
+	print("Temperature:%s Humidity:%s"%(temp,humi))
 	socketio.emit('s2c_temp',temp)
 	socketio.emit('s2c_humi',humi)
 	return relay_com
@@ -18,7 +18,7 @@ def getdata(temp,humi):
 @app.route("/data2/<temp2>/<humi2>")
 def getdata2(temp2,humi2):
 	global relay_com2
-	print"Temperature2:%s Humidity2:%s"%(temp2,humi2)
+	print("Temperature2:%s Humidity2:%s"%(temp2,humi2))
 	socketio.emit('s2c_temp2',temp2)
 	socketio.emit('s2c_humi2',humi2)
 	return relay_com2
@@ -31,7 +31,7 @@ def getcom(com):
 		relay_com = "1"
 	if(com=="offrelay"):
 		relay_com = "0"
-	print com
+	print (com)
 	
 @app.route("/home")
 def home():

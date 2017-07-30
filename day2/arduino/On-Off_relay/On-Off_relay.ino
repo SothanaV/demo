@@ -14,9 +14,9 @@ int relay = 5;        //setpin of relay at D1
 int DHTTYPE = DHT11;                  //set Dht Type 
 DHT dht(DHTPIN, DHTTYPE);             //define DHT type and pin
 void SendData(float h , float t);     //Define Senddata Voide
-const char* ssid     = "SmartMushroomBox";            //Set ssid ใส่ชื่อwifi
-const char* password = "12345678";                    //Set Password ใส่พาสเวิร์ดwifi
-const char* Server   = "139.59.99.17";                //set Server Domain or Server ip ใส่โดเมนหรือไอพีเซิฟเวอร์
+const char* ssid     = "true_home2G_792";            //Set ssid ใส่ชื่อwifi
+const char* password = "ilovestudy";                    //Set Password ใส่พาสเวิร์ดwifi
+const char* Server   = "192.168.1.52";                //set Server Domain or Server ip ใส่โดเมนหรือไอพีเซิฟเวอร์
 ESP8266WiFiMulti WiFiMulti;
 void setup() 
 {
